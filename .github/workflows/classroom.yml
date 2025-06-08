@@ -1,0 +1,130 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: TestNewHeap
+      id: testnewheap
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestNewHeap
+        setup-command: ''
+        command: go test ./... -run ^TestNewHeap$
+        timeout: 10
+        max-score: 1
+    - name: TestSizeInsert
+      id: testsizeinsert
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestSizeInsert
+        setup-command: ''
+        command: go test ./... -run ^TestSizeInsert$
+        timeout: 10
+        max-score: 1
+    - name: TestTopEmpty
+      id: testtopempty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestTopEmpty
+        setup-command: ''
+        command: go test ./... -run ^TestTopEmpty$
+        timeout: 10
+        max-score: 1
+    - name: TestTop
+      id: testtop
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestTop
+        setup-command: ''
+        command: go test ./... -run ^TestTop$
+        timeout: 10
+        max-score: 1
+    - name: TestRemoveEmpty
+      id: testremoveempty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestRemoveEmpty
+        setup-command: ''
+        command: go test ./... -run ^TestRemoveEmpty$
+        timeout: 10
+        max-score: 1
+    - name: TestRemoveSequence
+      id: testremovesequence
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestRemoveSequence
+        setup-command: ''
+        command: go test ./... -run ^TestRemoveSequence$
+        timeout: 10
+        max-score: 1
+    - name: TestMaxHeapBehavior
+      id: testmaxheapbehavior
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestMaxHeapBehavior
+        setup-command: ''
+        command: go test ./... -run ^TestMaxHeapBehavior$
+        timeout: 10
+        max-score: 1
+    - name: TestNewPriorityQueue
+      id: testnewpriorityqueue
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestNewPriorityQueue
+        setup-command: ''
+        command: go test ./... -run ^TestNewPriorityQueue$
+        timeout: 10
+        max-score: 1
+    - name: TestIsEmptyAfterEnqueue
+      id: testisemptyafterenqueue
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestIsEmptyAfterEnqueue
+        setup-command: ''
+        command: go test ./... -run ^TestIsEmptyAfterEnqueue$
+        timeout: 10
+        max-score: 1
+    - name: TestDequeueEmpty
+      id: testdequeueempty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestDequeueEmpty
+        setup-command: ''
+        command: go test ./... -run ^TestDequeueEmpty$
+        timeout: 10
+        max-score: 1
+    - name: TestEnqueueDequeueOrder
+      id: testenqueuedequeueorder
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: TestEnqueueDequeueOrder
+        setup-command: ''
+        command: go test ./... -run ^TestEnqueueDequeueOrder$
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TESTNEWHEAP_RESULTS: ${{steps.testnewheap.outputs.result}}
+        TESTSIZEINSERT_RESULTS: ${{steps.testsizeinsert.outputs.result}}
+        TESTTOPEMPTY_RESULTS: ${{steps.testtopempty.outputs.result}}
+        TESTTOP_RESULTS: ${{steps.testtop.outputs.result}}
+        TESTREMOVEEMPTY_RESULTS: ${{steps.testremoveempty.outputs.result}}
+        TESTREMOVESEQUENCE_RESULTS: ${{steps.testremovesequence.outputs.result}}
+        TESTMAXHEAPBEHAVIOR_RESULTS: ${{steps.testmaxheapbehavior.outputs.result}}
+        TESTNEWPRIORITYQUEUE_RESULTS: ${{steps.testnewpriorityqueue.outputs.result}}
+        TESTISEMPTYAFTERENQUEUE_RESULTS: ${{steps.testisemptyafterenqueue.outputs.result}}
+        TESTDEQUEUEEMPTY_RESULTS: ${{steps.testdequeueempty.outputs.result}}
+        TESTENQUEUEDEQUEUEORDER_RESULTS: ${{steps.testenqueuedequeueorder.outputs.result}}
+      with:
+        runners: testnewheap,testsizeinsert,testtopempty,testtop,testremoveempty,testremovesequence,testmaxheapbehavior,testnewpriorityqueue,testisemptyafterenqueue,testdequeueempty,testenqueuedequeueorder
