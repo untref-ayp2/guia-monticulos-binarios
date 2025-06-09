@@ -1,4 +1,4 @@
-# Guía: Colas de Prioridad y Montículos Binários
+# Guía: Montículos Binarios y Colas de Prioridad
 
 ## Ejercicios
 
